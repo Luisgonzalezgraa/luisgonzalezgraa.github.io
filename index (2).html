@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luis González — Ingeniero de Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F5;
+    --ink:#10202B;
+    --ink2:#16303F;
+    --line:#2E4A5E;
+    --accent:#C1571F;
+    --accent-soft:#F0D9C9;
+    --muted:#5C6E77;
+    --card:#FFFFFF;
+    --rule:#D9DFDE;
+    --on-dark:#EDF2F1;
+    --on-dark-muted:#9FB2BB;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+  }
+  a{color:var(--accent);}
+  a:focus-visible, button:focus-visible, .tag:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+  .wrap{
+    max-width:860px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav.topnav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(244,246,245,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav.topnav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 24px;
+    max-width:860px;
+  }
+  .nav-mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  .nav-mark span{color:var(--accent);}
+  .nav-links{
+    display:flex;
+    gap:26px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .nav-links a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-decoration:none;
+    color:var(--muted);
+    position:relative;
+    padding-bottom:3px;
+    transition:color .2s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:0%;
+    height:1.5px;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{width:100%;}
+  @media (max-width:640px){ .nav-links{display:none;} }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 18px 18px, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+    background-size:28px 28px;
+    background-color:var(--ink);
+    color:var(--on-dark);
+    overflow:hidden;
+    border-bottom:3px solid var(--accent);
+  }
+  header.hero .wrap{
+    padding:96px 24px 76px;
+    position:relative;
+    z-index:2;
+  }
+  .crosshair{
+    position:absolute;
+    width:18px; height:18px;
+    z-index:2;
+    opacity:0.55;
+  }
+  .crosshair::before,.crosshair::after{
+    content:"";
+    position:absolute;
+    background:var(--on-dark-muted);
+  }
+  .crosshair::before{ width:100%; height:1px; top:50%; left:0; }
+  .crosshair::after{ width:1px; height:100%; left:50%; top:0; }
+  .crosshair.tl{ top:24px; left:24px; }
+  .crosshair.tr{ top:24px; right:24px; }
+
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--on-dark-muted);
+    border:1px solid rgba(237,242,241,0.2);
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:28px;
+  }
+  .status-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px rgba(193,87,31,0.25);
+    animation:pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 4px rgba(193,87,31,0.25); }
+    50%{ box-shadow:0 0 0 8px rgba(193,87,31,0.08); }
+  }
+
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(40px, 7vw, 64px);
+    font-weight:700;
+    margin:0 0 12px;
+    letter-spacing:-0.02em;
+    line-height:1.02;
+  }
+  .role{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(17px, 2.4vw, 21px);
+    font-weight:500;
+    color:var(--accent);
+    margin:0 0 30px;
+  }
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+  }
+  .meta a, .meta span{
+    color:var(--on-dark);
+    text-decoration:none;
+    border:1px solid rgba(237,242,241,0.18);
+    padding:8px 13px;
+    border-radius:6px;
+    transition:all .2s ease;
+  }
+  .meta a:hover{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+    transform:translateY(-1px);
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:64px 0;}
+  section.alt{ background:var(--card); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+
+  .section-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--rule);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .about p{
+    font-size:17.5px;
+    max-width:62ch;
+    color:var(--ink2);
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{ position:relative; padding-left:28px; }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:2px;
+    background:var(--rule);
+  }
+  .rev{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:22px 24px;
+    margin-bottom:20px;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .rev:last-child{ margin-bottom:0; }
+  .rev:hover{
+    transform:translateX(6px);
+    box-shadow:0 10px 24px -12px rgba(16,32,43,0.25);
+    border-color:var(--accent);
+  }
+  .rev::before{
+    content:"";
+    position:absolute;
+    left:-28px; top:26px;
+    width:12px; height:12px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2.5px solid var(--accent);
+  }
+  .rev-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin:0 0 6px;
+  }
+  .rev h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 3px;
+    color:var(--ink);
+  }
+  .rev-org{
+    font-size:14.5px;
+    color:var(--accent);
+    margin:0 0 14px;
+    font-weight:500;
+  }
+  .rev ul{ margin:0; padding-left:18px; font-size:15px; color:var(--ink2); }
+  .rev li{ margin-bottom:6px; }
+  .rev li:last-child{ margin-bottom:0; }
+
+  /* ---------- STACK ---------- */
+  .stack-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:22px;
+  }
+  .stack-group{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-left:3px solid var(--accent);
+    border-radius:8px;
+    padding:18px 18px 16px;
+  }
+  .stack-group h4{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 12px;
+  }
+  .tags{ display:flex; flex-wrap:wrap; gap:7px; }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    padding:5px 10px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    color:var(--ink);
+    transition:all .18s ease;
+    cursor:default;
+  }
+  .tag:hover{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+    transform:translateY(-1px);
+  }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-item{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:22px 24px;
+  }
+  .edu-item h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:18px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .edu-item p{ margin:0 0 4px; font-size:14.5px; color:var(--muted); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:var(--on-dark);
+    padding:70px 0;
+    text-align:center;
+  }
+  footer .cta{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(26px,4vw,36px);
+    font-weight:700;
+    margin:0 0 10px;
+  }
+  footer .sub{
+    color:var(--on-dark-muted);
+    font-size:15px;
+    margin:0 0 30px;
+  }
+  footer .meta{ justify-content:center; }
+  .btn-primary{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    color:#fff !important;
+    background:var(--accent);
+    border:1px solid var(--accent) !important;
+    padding:12px 22px;
+    border-radius:6px;
+    text-decoration:none;
+    transition:all .2s ease;
+  }
+  .btn-primary:hover{ background:transparent; color:var(--accent) !important; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .status-dot{ animation:none; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .rev:hover, .tag:hover, .meta a:hover{ transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="#top" class="nav-mark">LG<span>—</span>DEV</a>
+    <ul class="nav-links">
+      <li><a href="#perfil">Perfil</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#educacion">Educación</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <span class="crosshair tl"></span>
+  <span class="crosshair tr"></span>
+  <div class="wrap">
+    <div class="status-pill"><span class="status-dot"></span> Disponible para nuevas oportunidades</div>
+    <h1>Luis González</h1>
+    <p class="role">Ingeniero Civil Informático · Desarrollador Full Stack</p>
+    <div class="meta">
+      <span>Santiago, Chile</span>
+      <a href="mailto:luisg.graavendaal@gmail.com">luisg.graavendaal@gmail.com</a>
+      <span>+56 9 5995 6015</span>
+      <a href="https://github.com/Luisgonzalezgraa" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="about reveal" id="perfil">
+    <p class="section-label">Perfil</p>
+    <p>Ingeniero Civil Informático de la Universidad de Santiago de Chile, con experiencia en desarrollo backend, integración de APIs REST y administración de bases de datos en entornos empresariales y de banca. Manejo práctico de Python, Java y PHP, junto con frameworks modernos de frontend (React, Angular, Next.js) y despliegue de aplicaciones mediante Docker.</p>
+  </section>
+
+</div>
+
+<section class="alt">
+  <div class="wrap">
+    <p class="section-label" id="experiencia">Experiencia — orden cronológico</p>
+    <div class="timeline">
+
+      <div class="rev reveal">
+        <p class="rev-date">Sept. 2024 — Oct. 2025</p>
+        <h3>Analista Programador</h3>
+        <p class="rev-org">Banco Consorcio</p>
+        <ul>
+          <li>Desarrollé y optimicé soluciones tecnológicas para el área financiera, orientadas al cumplimiento de normativas regulatorias (C46, R13, C49).</li>
+          <li>Automaticé el normativo C46 mediante procedimientos almacenados en SQL Server, reduciendo el trabajo manual del equipo.</li>
+          <li>Automaticé procesos diarios con Python, mejorando la eficiencia operativa del área.</li>
+          <li>Di soporte técnico continuo a sistemas internos, identificando y resolviendo incidencias.</li>
+        </ul>
+      </div>
+
+      <div class="rev reveal">
+        <p class="rev-date">Mar. 2024 — Mar. 2025</p>
+        <h3>Desarrollador Full Stack Java</h3>
+        <p class="rev-org">Freelance</p>
+        <ul>
+          <li>Desarrollé una aplicación web a medida para gestión empresarial, incluyendo un módulo de flujo de caja.</li>
+          <li>Diseñé y modelé la base de datos en MySQL (modelos MER y MR) para sustentar la lógica de negocio.</li>
+          <li>Construí el backend con Spring Boot y Thymeleaf, y un frontend responsivo con HTML, CSS y JavaScript.</li>
+          <li>Desplegué y gestioné el hosting en DigitalOcean utilizando Docker.</li>
+        </ul>
+      </div>
+
+      <div class="rev reveal">
+        <p class="rev-date">Oct. 2023 — Jun. 2024</p>
+        <h3>Desarrollador Full Stack PHP</h3>
+        <p class="rev-org">Freelance</p>
+        <ul>
+          <li>Desarrollé una plataforma web orientada a topografía de Chile para un proyecto de tesis.</li>
+          <li>Construí el backend en PHP junto a una base de datos no relacional para el manejo de datos geográficos.</li>
+          <li>Implementé simulaciones de gráficos topográficos a partir de parámetros de latitud/longitud y espectro de amenaza uniforme.</li>
+        </ul>
+      </div>
+
+      <div class="rev reveal">
+        <p class="rev-date">Abr. 2021 — Jun. 2024</p>
+        <h3>Desarrollador Full Stack (PWA)</h3>
+        <p class="rev-org">APRIES · Bubble.io · Freelance</p>
+        <ul>
+          <li>Desarrollé aplicaciones web progresivas (PWA) con Bubble.io bajo metodología ágil (Scrum).</li>
+          <li>Lideré el desarrollo full stack: lógica de negocio, workflows e integraciones con APIs externas.</li>
+          <li>Diseñé interfaces responsivas centradas en la experiencia de usuario.</li>
+        </ul>
+      </div>
+
+      <div class="rev reveal">
+        <p class="rev-date">Abr. 2019 — Dic. 2019</p>
+        <h3>Desarrollador Python</h3>
+        <p class="rev-org">—</p>
+        <ul>
+          <li>Desarrollé APIs REST para aplicaciones web.</li>
+          <li>Realicé integración y pruebas de servicios utilizando Postman.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section class="stack reveal" id="stack">
+    <p class="section-label">Stack técnico</p>
+    <div class="stack-grid">
+      <div class="stack-group">
+        <h4>Lenguajes</h4>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Java</span><span class="tag">PHP</span>
+          <span class="tag">JavaScript</span><span class="tag">C</span><span class="tag">C++</span>
+          <span class="tag">R</span><span class="tag">Prolog</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>Frontend</h4>
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">Angular</span><span class="tag">Next.js</span>
+          <span class="tag">Vue.js</span><span class="tag">Node.js</span><span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>Backend</h4>
+        <div class="tags">
+          <span class="tag">Flask</span><span class="tag">Spring Boot</span><span class="tag">Laravel</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>Bases de datos</h4>
+        <div class="tags">
+          <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">SQL Server</span>
+          <span class="tag">NoSQL</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>DevOps &amp; Cloud</h4>
+        <div class="tags">
+          <span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">AWS</span>
+          <span class="tag">DigitalOcean</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>Herramientas</h4>
+        <div class="tags">
+          <span class="tag">Git</span><span class="tag">Postman</span><span class="tag">Power Query</span>
+          <span class="tag">VBA</span><span class="tag">Bubble.io</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="education reveal" id="educacion">
+    <p class="section-label">Educación</p>
+    <div class="edu-item">
+      <h3>Universidad de Santiago de Chile</h3>
+      <p>Ingeniería Civil Informática — Título obtenido</p>
+      <p>Licenciatura en Ciencias de la Ingeniería — Obtenida</p>
+    </div>
+  </section>
+
+</div>
+
+<footer id="contacto">
+  <div class="wrap">
+    <p class="cta">¿Conversamos?</p>
+    <p class="sub">Disponible para roles full stack, backend y automatización.</p>
+    <a class="btn-primary" href="mailto:luisg.graavendaal@gmail.com">Escríbeme →</a>
+    <div class="meta" style="margin-top:24px;">
+      <span>+56 9 5995 6015</span>
+      <a href="https://github.com/Luisgonzalezgraa" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
